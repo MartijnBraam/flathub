@@ -1,0 +1,59 @@
+{
+  "app-id": "nl.brixit.wiremapper",
+  "runtime": "org.gnome.Platform",
+  "runtime-version": "3.36",
+  "sdk": "org.gnome.Sdk",
+  "command": "wiremapper",
+  "finish-args": [
+    "--socket=wayland",
+    "--socket=fallback-x11",
+    "--share=ipc",
+    "--system-talk-name=org.bluez",
+    "--allow=bluetooth",
+    "--share=network"
+  ],
+  "modules": [
+    "python3-wiremapper.json",
+    {
+      "name": "wiremapper"
+    },
+    {
+      "name": "libhandy",
+      "buildsystem": "meson",
+      "config-opts": [
+        "-Dprofiling=false",
+        "-Dintrospection=enabled",
+        "-Dgtk_doc=false",
+        "-Dtests=false",
+        "-Dexamples=false",
+        "-Dvapi=false",
+        "-Dglade_catalog=disabled"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://source.puri.sm/Librem5/libhandy.git",
+          "tag": "v0.0.13",
+          "commit": "7a193d7692c9c76a1a94f17c4d30b585f77d177c"
+        }
+      ]
+    },
+    {
+      "name": "desktop-files",
+      "buildsystem": "simple",
+      "build-commands": [
+        "install -D data/nl.brixit.wiremapper.desktop /app/share/applications/nl.brixit.wiremapper.desktop",
+        "install -D data/icon.svg /app/share/icons/hicolor/scalable/apps/nl.brixit.wiremapper.svg",
+        "install -D data/nl.brixit.wiremapper.metainfo.xml /app/share/metainfo/nl.brixit.wiremapper.metainfo.xml"
+      ],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://gitlab.com/MartijnBraam/wiremapper.git",
+          "tag": "0.7.2",
+          "commit": "26b95535001fe9b398b2b09757a30a2eeb8a9ccd"
+        }
+      ]
+    }
+  ]
+}
